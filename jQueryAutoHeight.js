@@ -9,22 +9,22 @@
  * Since:   2010-04-19
  * Update:  2010-07-02
  * version: 0.03
- * Comment: 
+ * Comment:
  *
  * jQuery 1.2 later
- * 
+ *
  */
 
  (function($){
     $.fn.autoHeight = function(options){
         var op = $.extend({
-        
+
             column  : 0,
             clear   : 0,
             height  : 'minHeight',
             reset   : '',
             descend : function descend (a,b){ return b-a; }
-        
+
         },options || {}); // optionsに値があれば上書きする
 
         var self = $(this);
@@ -56,23 +56,24 @@
         // 取得した高さの数値を降順に並べ替え
         hList = hList.sort(op.descend);
         hMax = hList[0];
-        
+
         // 高さの最大値を要素に適用
-        var browser = $.browser.version;
+        var ie6 = typeof window.addEventListener == "undefined" && typeof document.documentElement.style.maxHeight == "undefined";
         if (op.column > 1) {
             for (var j=0; j<hListLine.length; j++) {
                 for (var k=0; k<op.column; k++) {
-                    if (browser == '6.0') {
+                    if (ie6) {
                         self.eq(j*op.column+k).height(hListLine[j]);
-                        if (k == 0 && op.clear != 0) self.eq(j*op.column+k).css('clear','both');
                     } else {
                         self.eq(j*op.column+k).css(op.height,hListLine[j]);
-                        if (k == 0 && op.clear != 0) self.eq(j*op.column+k).css('clear','both');
+                    }
+                    if (k == 0 && op.clear != 0) {
+                        self.eq(j*op.column+k).css('clear','both');
                     }
                 }
             }
         } else {
-            if (browser == '6.0') {
+            if (ie6) {
                 self.height(hMax);
             } else {
                 self.css(op.height,hMax);
