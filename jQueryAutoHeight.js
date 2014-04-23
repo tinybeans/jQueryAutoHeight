@@ -22,40 +22,26 @@
             column  : 0,
             clear   : 0,
             height  : 'minHeight',
-            reset   : '',
-            descend : function descend (a,b){ return b-a; }
-
+            reset   : ''
         },options || {}); // optionsに値があれば上書きする
 
         var self = $(this);
-        var n = 0,
-            hMax,
-            hList = new Array(),
-            hListLine = new Array();
-            hListLine[n] = 0;
+        if (op.reset == 'reset') {
+            self.removeAttr('style');
+        }
 
         // 要素の高さを取得
-        self.each(function(i){
-            if (op.reset == 'reset') {
-                $(this).removeAttr('style');
-            }
-            var h = $(this).height();
-            hList[i] = h;
-            if (op.column > 1) {
-                // op.columnごとの最大値を格納していく
-                if (h > hListLine[n]) {
-                    hListLine[n] = h;
-                }
-                if ( (i > 0) && (((i+1) % op.column) == 0) ) {
-                    n++;
-                    hListLine[n] = 0;
-                };
-            }
+        var hList = self.map(function(){
+            return $(this).height();
         });
-
-        // 取得した高さの数値を降順に並べ替え
-        hList = hList.sort(op.descend);
-        hMax = hList[0];
+        var hListLine = [];
+        if (op.column > 1) {
+            for(var i = 0, l = hList.length; i < Math.ceil(l / op.column); i++) {
+                var x = i * op.column;
+                // 指定カラム数の配列を切り出し、その中の高さの最大値を取得する
+                hListLine.push(Math.max.apply(null, hList.slice(x, x + op.column)));
+            }
+        }
 
         // 高さの最大値を要素に適用
         var ie6 = typeof window.addEventListener == "undefined" && typeof document.documentElement.style.maxHeight == "undefined";
@@ -73,10 +59,12 @@
                 }
             }
         } else {
+            // 取得した高さの数値の最大値を取得
+            var hMax = Math.max.apply(null, hList);
             if (ie6) {
                 self.height(hMax);
             } else {
-                self.css(op.height,hMax);
+                self.css(op.height, hMax);
             }
         }
     };
