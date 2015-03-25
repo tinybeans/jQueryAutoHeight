@@ -31,9 +31,9 @@
         }
 
         // 要素の高さを取得
-        var hList = $.map(self, function (e) {
-            return $(e).height();
-        });
+        var hList = self.map(function(){
+            return $(this).height();
+        }).get();
         var hListLine = [];
         if (op.column > 1) {
             for(var i = 0, l = hList.length; i < Math.ceil(l / op.column); i++) {
