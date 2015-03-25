@@ -7,8 +7,8 @@
  * http://sourceforge.jp/projects/opensource/wiki/licenses%2FMIT_license
  *
  * Since:   2010-04-19
- * Update:  2013-08-16
- * version: 0.04
+ * Update:  2015-03-26
+ * version: 0.05
  * Comment:
  *
  * jQuery 1.2 <-> 1.10.2
