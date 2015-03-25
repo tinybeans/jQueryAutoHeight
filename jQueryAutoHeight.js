@@ -26,7 +26,7 @@
         },options || {}); // optionsに値があれば上書きする
 
         var self = $(this);
-        if (op.reset == 'reset') {
+        if (op.reset === 'reset') {
             self.removeAttr('style');
         }
 
@@ -44,7 +44,7 @@
         }
 
         // 高さの最大値を要素に適用
-        var ie6 = typeof window.addEventListener == "undefined" && typeof document.documentElement.style.maxHeight == "undefined";
+        var ie6 = typeof window.addEventListener === "undefined" && typeof document.documentElement.style.maxHeight === "undefined";
         if (op.column > 1) {
             for (var j=0; j<hListLine.length; j++) {
                 for (var k=0; k<op.column; k++) {
@@ -53,7 +53,7 @@
                     } else {
                         self.eq(j*op.column+k).css(op.height,hListLine[j]);
                     }
-                    if (k == 0 && op.clear != 0) {
+                    if (k === 0 && op.clear !== 0) {
                         self.eq(j*op.column+k).css('clear','both');
                     }
                 }
